@@ -31,7 +31,7 @@ e.g. [수정] 250203
 e.g. Create 문자열 출력하기  
 e.g. Refactor 문자열 출력하기
 
-**Directory/File Name** | `platform/YYMMDD_문제_이름/id`  
+**Directory/File Name** | `platform/YYMMDD_문제_이름/id.언어`  
 e.g. softeer/250203\_문자열\_출력하기/kwaksj329.js
 
 ## 🌻 Members
