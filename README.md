@@ -56,6 +56,6 @@ e.g. softeer/250203\_문자열\_출력하기/kwaksj329.js
     <td><a href="https://github.com/rhino-ty">@rhino-ty</a></td>
     <td><a href="https://github.com/sweetyr928">@ssum1ra</a></td>
     <td><a href="https://github.com/choiseona">@choiseona</a></td>
-    <td><a href="https://github.com/aeujoung">@aeujoung</a></td>
+    <td><a href="https://github.com/dbjoung">@dbjoung</a></td>
   </tr>
 </table>
