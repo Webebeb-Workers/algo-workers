@@ -2,28 +2,26 @@ import sys
 from collections import deque
 
 def bfs(sx, sy):
-    dist = [[float('inf')] * m for _ in range(n)]
-    
     dx = [-1, 1, 0, 0]
     dy = [0, 0, -1, 1]
 
-    q = deque([(sx, sy)])
-    dist[sx][sy] = 0
+    q = deque([(sx, sy, 0)])
+    visited = set([(sx, sy)])
     
     while(q):
-        x, y = q.popleft()
+        x, y, dist = q.popleft()
 
         if((x, y) == end):
-            return dist[x][y]
+            return dist
         
         for i in range(4):
             nx = x + dx[i]
             ny = y + dy[i]
 
             if 0 <= nx < n and 0 <= ny < m and grid[nx][ny] != '#':
-                if dist[nx][ny] == float('inf'):
-                    dist[nx][ny] = dist[x][y] + 1
-                    q.append((nx, ny))
+                if (nx, ny) not in visited:
+                    visited.add((nx, ny))
+                    q.append((nx, ny, dist + 1))
     return float('inf')
 
 n, m = map(int, input().split())
