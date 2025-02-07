@@ -25,7 +25,6 @@ function bfs(start, graph) {
     for (const next of graph[current]) {
       if (!visited[next]) {
         visited[next] = true;
-        if (next === stop) continue; // 도착점 이후 탐색 방지
         queue.push(next);
       }
     }
