@@ -19,7 +19,7 @@ mapString.forEach((elements,row) => {
 // sum[i][j] = map[i][j]  + sum[i][j-1] + sum[i-1][j] - sum[i-1][j-1];
 // sum[i-1][j-1]을 빼주는 이유는 sum[i][j-1]와 sum[i-1][j]를 더할 때 sum[i-1][j-1]이 두 번 더해지기 때문임
 
-// 구간합
+// 부분합
 // partialSum = sum[rowEnd][columnEnd] - (sum[rowStart-1][columnEnd] + sum[rowEnd][columnStart-1]) + sum[rowStart-1][columnStart-1]
 // sum[rowStart-1][columnStart-1]을 더해주는 이유는 sum[rowStart-1][columnEnd]와 sum[rowEnd][columnStart-1] 을 뺄 떄 두 번 빼졌기 때문입
 
@@ -36,7 +36,7 @@ for(let rowStart = 1; rowStart<=N; rowStart++) {
     for(let rowEnd=rowStart; rowEnd<=N; rowEnd++) {
         for(let columnStart = 1; columnStart<=M; columnStart++) {
             for(let columnEnd = columnStart; columnEnd<=M; columnEnd++) {
-                // 구간합 구하기 
+                // 부분합 구하기 
                 const partialSum = sum[rowEnd][columnEnd] - (sum[rowStart-1][columnEnd] + sum[rowEnd][columnStart-1]) + sum[rowStart-1][columnStart-1]
                 max = Math.max(max, partialSum)
             }
