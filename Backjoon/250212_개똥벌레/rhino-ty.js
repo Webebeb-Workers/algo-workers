@@ -12,7 +12,7 @@ function binarySearch(arr, target) {
   while (left < right) {
     const mid = Math.floor((left + right) / 2);
     // 큰 값 찾기
-    if (arr[mid] > target) {
+    if (arr[mid] >= target) {
       left = mid + 1;
     } else {
       right = mid;
@@ -40,10 +40,10 @@ function beatlesWithHurdle(N, H, hurdles) {
   // 각 높이별로 장애물 수 계산
   for (let height = 1; height <= H; height++) {
     // 석순: (H-height+1)보다 큰 석순의 수
-    const bottomCount = binarySearch(bottomRocks, H - height);
+    const bottomCount = binarySearch(bottomRocks, H - height + 1);
 
-    // 종유석: h보다 큰 종유석의 수
-    const topCount = binarySearch(topRocks, height - 1);
+    // 종유석: height보다 큰 종유석의 수
+    const topCount = binarySearch(topRocks, height);
 
     const totalHurdles = bottomCount + topCount;
 
