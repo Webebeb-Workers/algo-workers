@@ -6,14 +6,14 @@ def dfs(row):
         return
     
     for col in range(n):
-        if cols[col] or diag1[row - col] or diag2[row + col]:
+        if cols[col] or diag1[row + col] or diag2[row - col]:
             continue
 
-        cols[col] = diag1[row - col] = diag2[row + col] = 1
+        cols[col] = diag1[row + col] = diag2[row - col] = 1
 
         dfs(row + 1)
 
-        cols[col] = diag1[row - col] = diag2[row + col] = 0
+        cols[col] = diag1[row + col] = diag2[row - col] = 0
 
 
 n = int(input())
