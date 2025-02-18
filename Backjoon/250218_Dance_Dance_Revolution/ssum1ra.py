@@ -1,7 +1,8 @@
 import sys
 input = sys.stdin.readline
+sys.setrecursionlimit(1_000_000)
 
-def calculate_power(start, end):
+def move(start, end):
     if start == 0:
         return 2
     elif start == end:
@@ -11,20 +12,17 @@ def calculate_power(start, end):
     else: 
         return 3
 
+def solve(num, left, right):
+    if num >= len(step) - 1:
+        return 0
+    
+    if dp[num][left][right] != -1:
+        return dp[num][left][right]
+    
+    dp[num][left][right] = min(solve(num + 1, step[num], right) + move(left, step[num]), solve(num + 1, left, step[num]) + move(right, step[num]))
+    return dp[num][left][right]
+
 step = list(map(int, input().split()))
-dp = [[[float('inf') for _ in range(5)] for _ in range(5)] for _ in range(len(step))]
+dp = [[[-1] * 5 for _ in range(5)] for _ in range(len(step))]
 
-dp[0][0][0] = 0
-
-for i in range(len(step) - 1):
-    for left in range(5):
-        for right in range(5):
-            dp[i+1][step[i]][right] = min(dp[i + 1][step[i]][right], dp[i][left][right] + calculate_power(left, step[i]))
-            dp[i+1][left][step[i]] = min(dp[i + 1][left][step[i]], dp[i][left][right] + calculate_power(right, step[i]))
-
-res = float('inf')
-for left in range(5):
-    for right in range(5):
-        res = min(res, dp[len(step) - 1][left][right])
-
-print(res)
+print(solve(0, 0, 0))
