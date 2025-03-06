@@ -11,7 +11,7 @@ assignees: olwooz
 <table>
   <tr>
     <th>Date</th>
-    <td>2024-00-00</td>
+    <td>2025-00-00</td>
   </tr>
   <tr>
     <th>Difficulty</th>
