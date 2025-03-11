@@ -60,11 +60,11 @@ function solution(n, bans) {
 
   // 알파벳의 위치가 n+index보다 작거나 같을 때만 구해야하는 알파벳 위치 1 증가
   let targetLocation = n;
-  sortedBansLocations.forEach((banLocation, index) => {
-    if (n + index >= banLocation) {
-      targetLocation++;
-    }
-  });
+
+  for (let i = 0; i < sortedBansLocations.length; i++) {
+    if (n + i >= sortedBansLocations[i]) targetLocation++;
+    else break;
+  }
 
   // 구한 targetLocation을 알파벳으로 치환
   const answer = decimalToBase26(targetLocation);
