@@ -1,26 +1,29 @@
 def get_path(start, end):
-    r = start[0] - end[0]
-    c = start[1] - end[1]
+    dr = start[0] - end[0]
+    dc = start[1] - end[1]
         
-    temp = [(start[0], start[1])]
-    while abs(r):
-        x, y = temp[-1]
-        if r > 0:
-            temp.append((x-1, y))
-            r -= 1
+    path = [start]
+    x, y = start
+
+    while dr != 0:
+        if dr > 0:
+            x -= 1
+            dr -= 1
         else:
-            temp.append((x+1, y))
-            r += 1
+            x += 1
+            dr += 1
+        path.append((x, y))
         
-    while abs(c):
-        x, y = temp[-1]
-        if c > 0:
-            temp.append((x, y-1))
-            c -= 1
+     while dc != 0:
+        if dc > 0:
+            y -= 1
+            dc -= 1
         else:
-            temp.append((x, y+1))
-            c += 1
-    return temp[1:]
+            y += 1
+            dc += 1
+        path.append((x, y))
+    
+    return path[1:]
 
 def solution(points, routes):
     answer = 0
