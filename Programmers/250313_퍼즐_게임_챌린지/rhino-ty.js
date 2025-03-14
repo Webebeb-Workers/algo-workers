@@ -12,8 +12,13 @@
 //   - 가능하면 더 낮은 숙련도 탐색, 불가능하면 더 높은 숙련도 탐색
 
 function solution(diffs, times, limit) {
-  let left = 1;
-  let right = Math.max(...diffs);
+  // let left = 1;
+  // diffs 길이는 30만개 이하임, JS 엔진의 호출 스택은 일반적으로 수천에서 수만 개의 프레임까지만 처리 가능
+  // 그래서 diffs를 스프레드로 펼쳐버리면 내부적으로 호출 스택에 모든 요소를 펼치게 되어 스택 오버플로우가 발생
+  // let right = Math.max(...diffs)
+
+  // 스프레드 연산자가 아닌 reduce로 최댓값 구함
+  let [left, right] = [1, diffs.reduce((acc, cur) => Math.max(acc, cur), 1)];
 
   // 이진 탐색으로 매개변수(최소 숙련도) 찾기: 최솟값이 최댓값보다 커졌을 때!
   while (left <= right) {
