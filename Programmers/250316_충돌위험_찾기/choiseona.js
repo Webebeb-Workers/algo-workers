@@ -22,14 +22,14 @@ function solution(points, routes) {
   const move = (startRow, startCol, endRow, endCol, accTime) => {
     // row 먼저 이동 -> col 이동
     // 위/아래 이동
-    while (Math.abs(startRow - endRow) > 0) {
+    while (startRow - endRow !== 0) {
       accTime++;
       startRow < endRow ? startRow++ : startRow--;
       record(startRow, startCol, accTime);
     }
 
     // 오른쪽/왼쪽 이동
-    while (Math.abs(startCol - endCol) > 0) {
+    while (startCol - endCol !== 0) {
       accTime++;
       startCol < endCol ? startCol++ : startCol--;
       record(startRow, startCol, accTime);
