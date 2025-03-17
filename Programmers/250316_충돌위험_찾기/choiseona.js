@@ -22,14 +22,14 @@ function solution(points, routes) {
   const move = (startRow, startCol, endRow, endCol, accTime) => {
     // row 먼저 이동 -> col 이동
     // 위/아래 이동
-    while (startRow - endRow !== 0) {
+    while (startRow !== endRow) {
       accTime++;
       startRow < endRow ? startRow++ : startRow--;
       record(startRow, startCol, accTime);
     }
 
     // 오른쪽/왼쪽 이동
-    while (startCol - endCol !== 0) {
+    while (startCol !== endCol) {
       accTime++;
       startCol < endCol ? startCol++ : startCol--;
       record(startRow, startCol, accTime);
@@ -39,7 +39,7 @@ function solution(points, routes) {
   };
 
   // 최단 경로 좌표와 각 좌표마다 걸린 time 반환 [y,x,time]
-  routes.forEach((route, index) => {
+  routes.forEach((route) => {
     let accTime = 0;
 
     const startIndex = route[0] - 1;
