@@ -13,61 +13,46 @@
 function solution(cap, n, deliveries, pickups) {
   let totalDistance = 0;
 
-  // 마지막 처리 위치 변수를 유지
-  let lastIdx = n - 1;
+  // 가장 먼 배달/수거 위치 추적
+  let d = n - 1;
+  let p = n - 1;
 
-  // 배달/수거해야 할 것이 남아있는 동안 반복
+  // 모든 배달과 수거가 끝날 때까지 반복
   while (true) {
-    // 배달할 물건이 있는 가장 먼 집 찾기 (이전 마지막 인덱스부터 스캔)
-    let lastDeliveryIdx = -1;
-    for (let i = lastIdx; i >= 0; i--) {
-      if (deliveries[i] > 0) {
-        lastDeliveryIdx = i;
-        break;
-      }
-    }
+    // 배달할 것이 없는 집 건너뛰기
+    while (d >= 0 && deliveries[d] === 0) d--;
 
-    // 수거할 물건이 있는 가장 먼 집 찾기 (이전 마지막 인덱스부터 스캔)
-    let lastPickupIdx = -1;
-    for (let i = lastIdx; i >= 0; i--) {
-      if (pickups[i] > 0) {
-        lastPickupIdx = i;
-        break;
-      }
-    }
+    // 수거할 것이 없는 집 건너뛰기
+    while (p >= 0 && pickups[p] === 0) p--;
 
-    // 모든 배달과 수거가 완료되었는지 확인
-    if (lastDeliveryIdx === -1 && lastPickupIdx === -1) {
-      break;
-    }
+    // 모든 작업이 완료되었는지 확인
+    if (d < 0 && p < 0) break;
 
-    // 이번에 방문해야 할 가장 먼 집 결정
-    const farthestIdx = Math.max(lastDeliveryIdx, lastPickupIdx);
-    // 다음 반복을 위해 마지막 처리 인덱스 업데이트
-    lastIdx = farthestIdx;
-
-    // 이번 왕복 거리 추가
-    totalDistance += (farthestIdx + 1) * 2;
+    // 이번 왕복의 최대 거리 계산
+    const distance = Math.max(d, p) + 1;
+    totalDistance += distance * 2;
 
     // 배달 처리
-    let deliveryCap = cap;
-    for (let i = farthestIdx; i >= 0; i--) {
-      if (deliveries[i] > 0) {
-        const deliverAmount = Math.min(deliveries[i], deliveryCap);
-        deliveries[i] -= deliverAmount;
-        deliveryCap -= deliverAmount;
-        if (deliveryCap === 0) break;
+    let box = cap;
+    for (let i = d; i >= 0 && box > 0; i--) {
+      if (deliveries[i] <= box) {
+        box -= deliveries[i];
+        deliveries[i] = 0;
+      } else {
+        deliveries[i] -= box;
+        box = 0;
       }
     }
 
     // 수거 처리
-    let pickupCap = cap;
-    for (let i = farthestIdx; i >= 0; i--) {
-      if (pickups[i] > 0) {
-        const pickupAmount = Math.min(pickups[i], pickupCap);
-        pickups[i] -= pickupAmount;
-        pickupCap -= pickupAmount;
-        if (pickupCap === 0) break;
+    box = cap;
+    for (let i = p; i >= 0 && box > 0; i--) {
+      if (pickups[i] <= box) {
+        box -= pickups[i];
+        pickups[i] = 0;
+      } else {
+        pickups[i] -= box;
+        box = 0;
       }
     }
   }
