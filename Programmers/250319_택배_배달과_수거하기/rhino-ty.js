@@ -13,20 +13,23 @@
 function solution(cap, n, deliveries, pickups) {
   let totalDistance = 0;
 
+  // 마지막 처리 위치 변수를 유지
+  let lastIdx = n - 1;
+
   // 배달/수거해야 할 것이 남아있는 동안 반복
   while (true) {
-    // 배달할 물건이 있는 가장 먼 집 찾기
+    // 배달할 물건이 있는 가장 먼 집 찾기 (이전 마지막 인덱스부터 스캔)
     let lastDeliveryIdx = -1;
-    for (let i = n - 1; i >= 0; i--) {
+    for (let i = lastIdx; i >= 0; i--) {
       if (deliveries[i] > 0) {
         lastDeliveryIdx = i;
         break;
       }
     }
 
-    // 수거할 물건이 있는 가장 먼 집 찾기
+    // 수거할 물건이 있는 가장 먼 집 찾기 (이전 마지막 인덱스부터 스캔)
     let lastPickupIdx = -1;
-    for (let i = n - 1; i >= 0; i--) {
+    for (let i = lastIdx; i >= 0; i--) {
       if (pickups[i] > 0) {
         lastPickupIdx = i;
         break;
@@ -40,6 +43,8 @@ function solution(cap, n, deliveries, pickups) {
 
     // 이번에 방문해야 할 가장 먼 집 결정
     const farthestIdx = Math.max(lastDeliveryIdx, lastPickupIdx);
+    // 다음 반복을 위해 마지막 처리 인덱스 업데이트
+    lastIdx = farthestIdx;
 
     // 이번 왕복 거리 추가
     totalDistance += (farthestIdx + 1) * 2;
