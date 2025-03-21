@@ -27,17 +27,9 @@ def solution(expressions):
     for exp in expressions:
         num1, op, num2, _, ans = exp.split()
         
-        for d in num1:
-            if int(d) > int(a):
-                a = int(d)
-        
-        for d in num2:
-            if int(d) > int(a):
-                a = int(d)
-        
-        for d in ans:
+        for d in num1 + num2 + ans:
             if d != 'X' and int(d) > int(a):
-                a = int(d)        
+                a = int(d)    
         
         if ans != 'X':
             hints.append(exp)
