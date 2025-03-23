@@ -13,11 +13,12 @@ function solution(expressions) {
 
   // 문자열 공백때문에 애먹었다..ㅜㅜ trim..trim...
 
-  const array = Array.from({ length: 10 }, () => Array.from({ length: expressions.length }, () => [-1, -1, -1, -1]));
-  const operations = [];
+  const array = Array.from({ length: 10 }, () =>
+    Array.from({ length: expressions.length }, () => [-1, -1, -1, -1, -1])
+  );
   let minBase = -1;
 
-  expressions.forEach((expression) => {
+  expressions.forEach((expression, expressionIndex) => {
     const [operation, result] = expression.split("=");
     const operator = operation.includes("+") ? "+" : "-";
     const [left, right] = operation.split(operator);
@@ -26,7 +27,14 @@ function solution(expressions) {
     const leftString = left.trim();
     const rightString = right.trim();
     const resultString = result.trim();
-    operations.push([leftString, operator, rightString, resultString]);
+
+    for (let base = 2; base <= 9; base++) {
+      const leftDecimal = parseInt(leftString, base);
+      const rightDecimal = parseInt(rightString, base);
+      const decimalResult = operator === "-" ? leftDecimal - rightDecimal : leftDecimal + rightDecimal;
+      const iBaseResult = decimalResult.toString(base);
+      array[base][expressionIndex] = [leftString, operator, rightString, iBaseResult, resultString];
+    }
 
     const leftNumbers = leftString.split("").map(Number);
     const rightNumbers = rightString.split("").map(Number);
@@ -41,23 +49,14 @@ function solution(expressions) {
   // 진법이 하나로 특정되지 않으면
   // 결과가 여러개이면 ?
   // 결과가 하나이면 결과값
-  for (let base = minBase; base <= 9; base++) {
-    for (let i = 0; i < operations.length; i++) {
-      const [leftString, operator, rightString, resultString] = operations[i];
-      const leftDecimal = parseInt(leftString, base);
-      const rightDecimal = parseInt(rightString, base);
-      const decimalResult = operator === "-" ? leftDecimal - rightDecimal : leftDecimal + rightDecimal;
-      const iBaseResult = decimalResult.toString(base);
-      array[base][i] = [leftString, operator, rightString, iBaseResult];
-    }
-  }
 
   // 진법에 대한 결과값 구하기
   const candidate = array.filter((base, baseIndex) => {
-    if (baseIndex < minBase) return false; // 이게 없어서 틀렸다. array[base][i]가 [-1,-1,-1,-1] 이고 targetResult가 X라면 true이기 때문에 잘못된 결과가 나오게 됨!
-    return base.every((current, index) => {
-      const targetResult = operations[index][3];
-      const currentResult = current[3];
+    if (baseIndex < minBase) return false;
+
+    return base.every((item, index) => {
+      const targetResult = item[4];
+      const currentResult = item[3];
       return targetResult === "X" || currentResult === targetResult;
     });
   });
@@ -67,7 +66,7 @@ function solution(expressions) {
     const answer = [];
     candidate[0].forEach((item, index) => {
       const [left, oper, right, result] = item;
-      if (operations[index][3] === "X") answer.push(`${left} ${oper} ${right} = ${result}`);
+      if (item[4] === "X") answer.push(`${left} ${oper} ${right} = ${result}`);
     });
     return answer;
   }
@@ -87,7 +86,7 @@ function solution(expressions) {
     candidate[0].forEach((item, index) => {
       let [left, oper, right, result] = item;
 
-      if (operations[index][3] === "X") {
+      if (item[4] === "X") {
         // 결과가 여러개이면 ?, 결과가 하나이면 그대로
         if (diffIndex.includes(index)) result = "?";
         answer.push(`${left} ${oper} ${right} = ${result}`);
