@@ -16,20 +16,26 @@ function solution(expressions) {
   // 결과 배열
   const result = [];
 
-  // X가 있는 수식들의 인덱스 찾기
-  const xIndices = expressions.reduce((acc, exp, idx) => {
-    if (exp.includes('= X')) acc.push(idx);
-    return acc;
-  }, []);
+  // X가 있는 수식들 찾기
+  const xExpressions = expressions.filter((exp) => exp.includes('= X'));
 
   // 가능한 진법 찾기 (2~9 진법)
   let possibleBases = [2, 3, 4, 5, 6, 7, 8, 9];
 
-  // X가 아닌 수식들을 통해 가능한 진법 필터링
-  for (let i = 0; i < expressions.length; i++) {
-    if (!expressions[i].includes('= X')) {
+  // 모든 수식에서 사용된 숫자들을 찾아 진법 필터링
+  for (const exp of expressions) {
+    const numbers = exp.match(/\d+/g);
+    const maxDigit = Math.max(...numbers.join('').split('').map(Number));
+
+    // 가장 큰 숫자보다 큰 진법들만 가능
+    possibleBases = possibleBases.filter((base) => base > maxDigit);
+  }
+
+  // X가 아닌 수식들을 통해 가능한 진법 추가 필터링
+  for (const exp of expressions) {
+    if (!exp.includes('= X')) {
       // 수식 파싱
-      const [left, right] = expressions[i].split(' = ');
+      const [left, right] = exp.split(' = ');
       const [a, op, b] = left.split(' ');
       const c = right;
 
@@ -51,13 +57,12 @@ function solution(expressions) {
   }
 
   // X가 있는 수식들에 대해 결과값 계산
-  for (const idx of xIndices) {
-    const [left, right] = expressions[idx].split(' = ');
+  for (const exp of xExpressions) {
+    const [left, right] = exp.split(' = ');
     const [a, op, b] = left.split(' ');
 
-    // 각 가능한 진법에서의 결과값 계산
-    const results = new Set();
-    const valuesByBase = new Map();
+    // 각 진법별 결과값 계산 및 저장
+    const resultsByBase = new Map();
 
     for (const base of possibleBases) {
       const numA = parseInt(a, base);
@@ -66,26 +71,27 @@ function solution(expressions) {
       let calculatedResult;
       if (op === '+') {
         calculatedResult = numA + numB;
-      } else {
+      } else if (op === '-') {
         // op === '-'
         calculatedResult = numA - numB;
       }
 
       // 계산 결과를 해당 진법의 문자열로 변환
       const resultInBase = calculatedResult.toString(base);
-      results.add(resultInBase);
 
-      if (!valuesByBase.has(resultInBase)) {
-        valuesByBase.set(resultInBase, []);
+      // 결과값과 해당 진법 매핑
+      if (!resultsByBase.has(resultInBase)) {
+        resultsByBase.set(resultInBase, []);
       }
-      valuesByBase.get(resultInBase).push(base);
+      resultsByBase.get(resultInBase).push(base);
     }
 
-    // 결과값이 모든 가능한 진법에서 동일하면 그 값을, 아니면 '?'
-    if (results.size === 1) {
-      result.push(expressions[idx].replace('X', [...results][0]));
+    // 결과값이 모든 가능한 진법에서 동일하면 그 값을, 아니면 '?' 사용
+    if (resultsByBase.size === 1) {
+      const resultValue = [...resultsByBase.keys()][0];
+      result.push(exp.replace('= X', `= ${resultValue}`));
     } else {
-      result.push(expressions[idx].replace('X', '?'));
+      result.push(exp.replace('= X', '= ?'));
     }
   }
 
