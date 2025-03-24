@@ -1,12 +1,12 @@
 def combinations(n):
     res = []
-    def dfs(idx, arr, n):
+    def dfs(start, arr):
         if len(arr) == 5:
             res.append(arr)
             return
-        for i in range(idx+1, n+1):
-            dfs(i, arr[:] + [i], n)
-    dfs(0, [], n)
+        for i in range(start+1, n+1):
+            dfs(i, arr[:] + [i])
+    dfs(0, [])
     return res
 
 def solution(n, q, ans):
@@ -15,14 +15,14 @@ def solution(n, q, ans):
     cand = combinations(n)
     
     for c in cand:
-        cnt = 0
+        match_cnt = 0
         for i in range(len(q)):
-            a = len(c + q[i]) - len(set(c + q[i]))
-            if a == ans[i]:
-                cnt += 1
+            overlap_cnt = len(c + q[i]) - len(set(c + q[i]))
+            if overlap_cnt == ans[i]:
+                match_cnt += 1
             else:
                 break
-        if cnt == len(ans):
+        if match_cnt == len(ans):
             answer += 1
     
     return answer
