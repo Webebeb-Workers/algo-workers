@@ -3,9 +3,7 @@ def check(arr):
         return True
 
     mid = len(arr) // 2
-    root = arr[mid]
-
-    if root == '0':
+    if arr[mid] == '0':
         return all(x == '0' for x in arr)
 
     return check(arr[:mid]) and check(arr[mid + 1:])
@@ -16,10 +14,10 @@ def solution(numbers):
     for number in numbers:
         b = list(bin(number))[2:]
 
+        # padding
         l = 1
         while l < len(b):
             l = l * 2 + 1
-
         b = ['0'] * (l - len(b)) + b[:]
 
         answer.append(1 if check(b) else 0)
