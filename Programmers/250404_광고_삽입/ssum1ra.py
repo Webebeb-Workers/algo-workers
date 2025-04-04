@@ -21,7 +21,7 @@ def solution(play_time, adv_time, logs):
         seconds[i] += seconds[i-1]
     
     answer = 0
-    max_sec = seconds[str_to_sec(adv_time)]
+    max_sec = seconds[str_to_sec(adv_time) - 1]
     for t in range(1, len(seconds) - str_to_sec(adv_time) + 1):
         temp = seconds[t + str_to_sec(adv_time) - 1] - seconds[t-1]
         if temp > max_sec:
