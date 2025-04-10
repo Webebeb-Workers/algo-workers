@@ -24,11 +24,9 @@ const BFS = () => {
     if (current === 100) return count;
 
     for (let i = 1; i <= 6; i++) {
-      let next = current + i;
-      if (next > 100 || visited[next]) continue;
-
       // 사다리 또는 뱀 위치로 이동
-      next = board[next];
+      let next = board[current + i];
+      if (next > 100 || visited[next]) continue;
 
       visited[next] = true;
       queue.push([next, count + 1]);
