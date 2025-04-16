@@ -12,7 +12,7 @@ function getMinSumS(N, S, numArr) {
   let curSum = 0;
   let minLength = Infinity;
 
-  while (end <= numArr.length - 1) {
+  while (end <= N) {
     curSum += numArr[end];
 
     while (curSum >= S) {
