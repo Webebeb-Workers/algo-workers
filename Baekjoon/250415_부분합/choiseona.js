@@ -12,15 +12,12 @@ let right = 0;
 let sum = 0;
 let minLength = Infinity;
 
-while (true) {
+while (right <= N) {
   if (sum >= S) {
     minLength = Math.min(minLength, right - left);
-    sum -= arr[left];
-    left++;
+    sum -= arr[left++];
   } else {
-    if (right === N) break;
-    sum += arr[right];
-    right++;
+    sum += arr[right++];
   }
 }
 
