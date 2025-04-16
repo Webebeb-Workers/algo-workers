@@ -16,8 +16,8 @@ int main() {
     
     for(int i = 0; i < K; i++) {
         for(int j = 0; j < K; j++) {
-            int x_start = max(0, meteors[i].first - L);
-            int y_start = max(0, meteors[j].second - L);
+            int x_start = meteors[i].first;
+            int y_start = meteors[j].second;
             
             int caught = 0;
             for(int k = 0; k < K; k++) {
