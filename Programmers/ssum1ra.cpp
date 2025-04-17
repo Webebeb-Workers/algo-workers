@@ -1,10 +1,9 @@
 #include <string>
 #include <vector>
 #include <algorithm>
+#define INF 1e9
 
 using namespace std;
-
-const int INF = 1e9;
 
 int solution(int n, int s, int a, int b, vector<vector<int>> fares) {
     vector<vector<int>> graph(n+1, vector<int>(n+1, INF));
