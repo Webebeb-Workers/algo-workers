@@ -4,26 +4,22 @@
 using namespace std;
 
 int main() {
-    string s;
-    cin >> s;
-    string bomb;
-    cin >> bomb;
-    int l = bomb.length();
+    string s, bomb;
+    cin >> s >> bomb;
 
-    bool isExist = true;
-    while(isExist){
-        isExist = false;
-        int i = 0;
-        while(i + l <= s.length()){
-            if(bomb == s.substr(i, l)){
-                s.erase(i, l);
-                isExist = true;
-            } else i++;
+    string result;
+    int blen = bomb.length();
+
+    for(auto c : s) {
+        result += c;
+
+        if(result.length() >= blen && result.substr(result.length() - blen) == bomb){
+            result.erase(result.length() - blen);
         }
     }
-
-    if(s.length() == 0) cout << "FRULA" << endl;
-    else cout << s << endl;
+    
+    if(result.empty()) cout << "FRULA" << endl;
+    else cout << result << endl;
 
     return 0;
 }
