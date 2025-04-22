@@ -32,22 +32,23 @@ for (const word of words) {
 }
 
 const answer = stack.join("").trim();
-answer.length === 0 ? console.log("FRULA") : console.log(answer); */
+console.log(answer.length === 0 ? "FRULA" : answer)
+*/
 
 // 포인터
 // 시간 복잡도: O(N*M) (1216ms)
 // 공간 복잡도: O(N) + slice + join (70616KB)
 // stack이랑 효율성 비슷, splice 안하니까 조금 더 효율적
-const answer = [...words];
+const wordsArray = [...words];
 let pointer = 0;
 
-for (let i = 0; i < answer.length; i++) {
-  answer[pointer++] = answer[i];
+for (const word of wordsArray) {
+  wordsArray[pointer++] = word;
 
   if (pointer < bombs.length) continue;
-  const bombedWords = answer.slice(pointer - bombs.length, pointer).join("");
+  const bombedWords = wordsArray.slice(pointer - bombs.length, pointer).join("");
   if (bombedWords === bombs) pointer -= bombs.length;
 }
 
-const result = answer.slice(0, pointer).join("").trim();
+const result = wordsArray.slice(0, pointer).join("").trim();
 console.log(result.length === 0 ? "FRULA" : result);
