@@ -32,11 +32,8 @@ int main() {
         if(arr1.size() > 1){
             arr1.insert(arr1.begin() + 1, N - (arr1.size() + arr2.size() - 1), 1);
         }
-        else if(arr2.size() > 1){
+        else {
             arr2.insert(arr2.begin() + 1, N - (arr1.size() + arr2.size() - 1), 1);
-        }
-        else if(arr1.size() == 1 && arr2.size() == 1){
-            arr1.insert(arr1.end(), N - 1, 1);
         }
     }
 
