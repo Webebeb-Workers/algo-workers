@@ -34,7 +34,7 @@ def solution(key, lock):
             for y in range(1, m + n):
                 attach(x, y, m, rotated_key, board)
                 if check(board, m, n):
-                    return True;
+                    return True
                 detach(x, y, m, rotated_key, board)
     
     return False
