@@ -11,7 +11,7 @@ const pelSet = new Array(2001)
   .fill(null)
   .map(() => new Array(2001).fill(false));
 
-// 홀수 펠린드롬
+// 홀수 펠린드롬 구하기
 for (let center = 0; center < nums.length; center++) {
   let left = center;
   let right = center;
@@ -22,7 +22,7 @@ for (let center = 0; center < nums.length; center++) {
   }
 }
 
-// 짝수 펠린드롬
+// 짝수 펠린드롬 구하기
 for (let center = 0; center < nums.length - 1; center++) {
   let left = center;
   let right = center + 1;
