@@ -15,7 +15,8 @@ def solution(stones, k):
         
         if cnt >= k:
             r = m - 1
+            answer = m
         else:
             l = m + 1
             
-    return l
+    return answer
