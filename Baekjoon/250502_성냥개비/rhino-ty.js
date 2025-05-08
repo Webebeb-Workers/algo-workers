@@ -11,13 +11,13 @@ function getMinMaxNums(N, stickNumArr) {
   const results = [];
 
   // i개 성냥으로 만들 수 있는 가장 작은 한 자리 숫자
-  const min_num = Array(8).fill(Infinity);
-  min_num[2] = 1;
-  min_num[3] = 7;
-  min_num[4] = 4;
-  min_num[5] = 2; // 2, 3, 5 중 가장 작은 숫자
-  min_num[6] = 0; // 두 번째 자리부터는 0이 가능
-  min_num[7] = 8;
+  const minNumArr = Array(8).fill(Infinity);
+  minNumArr[2] = 1;
+  minNumArr[3] = 7;
+  minNumArr[4] = 4;
+  minNumArr[5] = 2; // 2, 3, 5 중 가장 작은 숫자
+  minNumArr[6] = 0; // 두 번째 자리부터는 0이 가능
+  minNumArr[7] = 8;
 
   // 최솟값 DP 배열 초기화 (최대 입력값까지)
   const dp = Array(101).fill(Infinity); // 문제 제약 조건: n ≤ 100
@@ -37,8 +37,8 @@ function getMinMaxNums(N, stickNumArr) {
         // dp[i-j]가 초기화되지 않은 경우 처리
         if (dp[i - j] === Infinity) continue;
 
-        // 점화식 적용: dp[i] = min(dp[i], dp[i-j]*10 + min_num[j])
-        const newValue = dp[i - j] * 10 + min_num[j];
+        // 점화식 적용: dp[i] = min(dp[i], dp[i-j]*10 + minNumArr[j])
+        const newValue = dp[i - j] * 10 + minNumArr[j];
         dp[i] = Math.min(dp[i], newValue);
       }
     }
