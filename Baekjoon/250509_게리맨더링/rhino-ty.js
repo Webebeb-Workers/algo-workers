@@ -19,9 +19,9 @@ function getMinBetweenDistricts(N, populars, areas) {
 
   // 그래프 생성 (1-indexed)
   for (let i = 0; i < N; i++) {
-    const [count, ...adjacents] = areas[i];
+    const [count, ...nodes] = areas[i];
     for (let j = 0; j < count; j++) {
-      graph[i + 1].push(adjacents[j]);
+      graph[i + 1].push(nodes[j]);
     }
   }
 
