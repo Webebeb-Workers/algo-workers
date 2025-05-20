@@ -22,7 +22,7 @@ for _ in range(T):
             dp[i][j] = float('inf')
             for k in range(opt[i][j - 1], opt[i + 1][j] + 1):
                 if k >= j:
-                    continue
+                    break
                 cost = dp[i][k] + dp[k + 1][j] + (prefix_sum[j] - prefix_sum[i - 1])
                 if cost < dp[i][j]:
                     dp[i][j] = cost
