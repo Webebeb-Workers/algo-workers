@@ -14,8 +14,7 @@ array.forEach((el) => {
 for (let k = 1; k <= V; k++) {
   for (let i = 1; i <= V; i++) {
     for (let j = 1; j <= V; j++) {
-      const distance = graph[i][k] + graph[k][j];
-      if (distance < graph[i][j]) graph[i][j] = distance;
+      graph[i][j] = Math.min(graph[i][j], graph[i][k] + graph[k][j]);
     }
   }
 }
